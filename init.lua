@@ -35,6 +35,12 @@
 --]]
 
 local citybuilder_structures = {
+	{scm="npc_lumberjack_level_0_1_0", title="Forrest",    descr="Tree farm",  upgrade_to=nil,
+		-- we need to get started somehow
+		requires=nil,
+		provides="lumberjack", level=0, inh=0, worker=0, children=0, needs_worker=1, job="lumberjack"},
+
+
 	-- very tiny wooden cabin
 	{scm="npc_house_level_0_1_180", title="Provisory shed",    descr="Just arrived",             upgrade_to="npc_house_level_1_1_180",
 		-- we need to get started somehow
@@ -96,12 +102,12 @@ local citybuilder_structures = {
 		-- the mine will need a lot of wood;
 		-- the pub is needed for recovery after all that mining;
 		-- there has to be at least one house;
-		requires={lumberjack = 1, pub = 1, housing = 1},
+		requires={lumberjack = 0, pub = 1, housing = 1},
 		provides="mine", level=1, inh=0, worker=0, children=0, needs_worker=1, job="miner"},
 
 	{scm="npc_mine_level_2_6_270", title="Coal mine",   descr="Digging for coal",  upgrade_to="npc_mine_level_3_6_270",
 		-- the miner is needed for the cobble in the building;
-		requires={lumberjack = 1, pub = 1, housing = 1},
+		requires={lumberjack = 0, pub = 1, housing = 1},
 		provides="mine", level=2, inh=0, worker=0, children=0, needs_worker=1, job="miner"},
 
 	{scm="npc_mine_level_3_6_270", title="Ore mine", descr="Searching for iron and copper",   upgrade_to="npc_mine_level_4_6_270",
@@ -122,6 +128,44 @@ local citybuilder_structures = {
 
 
 
+	-- 2 tables and some benches below a tree; not really a pub yet...
+	{scm="npc_pub_level_0_5_0", title="Benches below a tree",    descr="Starting a pub/inn",  upgrade_to="npc_pub_level_1_5_0",
+		-- we need to get started somehow
+		requires=nil,
+		provides="pub", level=0, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- small open booth for vending liquids
+	{scm="npc_pub_level_1_5_0", title="Open booth pub",          descr="Liquids are sold",    upgrade_to="npc_pub_level_2_5_0",
+		requires={ lumberjack = 0, housing = 0},
+		provides="pub", level=1, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- small wooden pub/inn
+	{scm="npc_pub_level_2_5_0", title="Wooden pub",              descr="Wooden pub",          upgrade_to="npc_pub_level_3_5_0",
+		requires={ lumberjack = 0, housing = 1, mine = 0},
+		provides="pub", level=2, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- small pub (loam + wood)
+	{scm="npc_pub_level_3_5_0", title="Small pub/inn",           descr="Small pub",           upgrade_to="npc_pub_level_4_4_0",
+		requires={ lumberjack = 0, housing = 2, mine = 1},
+		provides="pub", level=3, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- clay + black roof
+	{scm="npc_pub_level_5_4_3", title="Pub",                    descr="Pub with inn",         upgrade_to="npc_pub_level_5_5_0",
+		requires={ lumberjack = 0, housing = 3, mine = 2},
+		provides="pub", level=4, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- larger version
+	{scm="npc_pub_level_5_5_3", title="Large pub",              descr="Room for more guests", upgrade_to="npc_pub_level_6_5_0",
+		requires={ lumberjack = 0, housing = 4, mine = 3},
+		provides="pub", level=5, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+	-- brick version
+	{scm="npc_pub_level_6_5_3", title="Big inn",                descr="Food and rooms for all needs",  upgrade_to=nil,
+		requires={ lumberjack = 0, housing = 5, mine = 4},
+		provides="pub", level=6, inh=0, worker=0, children=0, needs_worker=1, job="bartender"},
+
+
+
 	-- very tiny wooden chapel
 	{scm="npc_church_level_0_1_0", title="Small chapel",         descr="Getting started",          upgrade_to="npc_church_level_1_1_0",
 		-- we need to get started somehow
@@ -130,7 +174,7 @@ local citybuilder_structures = {
 		provides="church", level=0, inh=0, worker=0, children=0, needs_worker=0, job="priest"},
 
 	-- small wooden church
-	{scm="npc_church_level_1_1_0", title="Small wooden church",  descr="Marriages can take place", upgrade_to="npc_church_level_2_1_0",
+	{scm="npc_church_level_1_1_0", title="Small wooden church",  descr="Marriages can take place", upgrade_to=nil,
 		-- we need to get started somehow
 		requires={ lumberjack = 0, housing = 0},
 		provides="church", level=1, inh=0, worker=0, children=0, needs_worker=1, job="priest"},
@@ -143,4 +187,3 @@ local path = minetest.get_modpath( minetest.get_current_modname()).."/schems/";
 for i,v in ipairs( citybuilder_structures ) do
         citybuilder.add_blueprint( path, v, "citybuilder_structures" );
 end
-
